@@ -1,0 +1,38 @@
+:icons: font
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+= Run Dependency Tests
+
+== Introduction
+
+Arch Unit Tests is a Gradle plugin that configures a new verification task called `architectureTest`.
+
+This project is inspired by the https://github.com/societe-generale/arch-unit-gradle-plugin[arch-unit-gradle-plugin], but this project intends to make use of the gradle testing and repositories ecosystem.
+
+The `architectureTest` task is a regular test task, however, tests are intended to be provided via dependencies in a repositories (e.g. mavenCentral). The task being a regular test task also means all the functionality (e.g. filter on tags, output reports) are available.
+
+Configuring dependencies with tests to run on the task looks like this:
+
+[source,kotlin]
+.build.gradle.kts
+----
+architectureTest {
+    tests.set(listOf("dev.mrbergin.aut.examples:arch-tests"))
+}
+----
+
+== Why would I want this?
+
+The intended use case of this plugin is to allow architecture rules to be published as artifacts, and declaratively consumed by any projects that should adhere to these rules.
+
+One example would be an organisation that requires all microservices (defined in separate repositories) to follow the same architecture rules (e.g. base package structure must follow com.example). Regular Gradle tests only run those tests in your test source set, so the alternative would be to copy paste the architecture rules across each service which is not desirable.
+
+IMPORTANT: This plugin does not need Arch Unit to work. It is recommended, however, to use the https://github.com/mrbergin/run-dependency-tests[run-dependency-tests] for other types of dependent tests you want to run as it is more flexible and not specifically worded for architecture.
+
+See the xref:examples/README.adoc[examples] section for further context.
+

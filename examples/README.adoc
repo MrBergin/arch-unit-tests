@@ -1,0 +1,22 @@
+= Examples
+
+== Architecture Tests
+
+The use-case this example intends to demonstrate is as follows:
+
+There is a library that defines architecture rules with ArchUnit called `arch-tests`
+
+Another module `my-module` should follow these architecture rules.
+
+This can be achieved by applying the `arch-unit-tests` plugin and adding the `arch-tests` maven coordinates as follows:
+
+[source,kotlin]
+----
+architectureTest {
+    tests.set(listOf("dev.mrbergin.aut.examples:arch-tests"))
+}
+----
+
+The tests can now be run with the `architectureTest` task, resulting in a test output just like a regular `test` task.
+
+In this case, the project `arch-tests` has a test which enforces all packages reside in the `dev.mrbergin` package, and `my-module` gains access to these via the code block outlined above.
