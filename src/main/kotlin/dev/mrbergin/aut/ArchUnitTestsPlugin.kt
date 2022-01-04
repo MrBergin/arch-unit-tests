@@ -22,6 +22,8 @@ class ArchUnitTestsPlugin: Plugin<Project> {
         }
         val architectureTestExtension = target.extensions.create<ArchitectureTestExtension>("architectureTest")
         target.afterEvaluate {
+            architectureTestTask.classpath = project.objects.fileCollection()
+            architectureTestTask.testClassesDirs = project.objects.fileCollection()
             architectureTestTask.includeTestsFrom(*architectureTestExtension.tests.get().toTypedArray())
         }
     }
